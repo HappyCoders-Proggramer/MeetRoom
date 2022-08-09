@@ -5,30 +5,35 @@ import { BsRecordCircle, BsPlus } from "react-icons/bs";
 import { IoPeopleOutline } from "react-icons/io5";
 import user from "../../assets/images/user.png";
 import * as webRTCHandler from "../../utils/webRTCHandler";
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-const Video = ({ roomId, identity, isRoomHost, connectOnlyWithAudio}) => {
+const Video = () => {
+    const userData = useSelector(state => state.reducerSlice)
+    console.log(userData)
+
     const [isLocalVideoDisabled, setIsLocalVideoDisabled] = useState(false);
     const [isMicMuted, setIsMicMuted] = useState(false);
 
-    useEffect(() => {
-            webRTCHandler.getLocalPreviewAndInitRoomConnection(
-            isRoomHost,
-            identity,
-            roomId,
-            connectOnlyWithAudio);
-        // if (!isRoomHost && !roomId) {
-        //   const siteUrl = window.location.origin +'/room';
-        //   window.location.href = siteUrl;
-        // } else {
-        //   webRTCHandler.getLocalPreviewAndInitRoomConnection(
-        //     isRoomHost,
-        //     identity,
-        //     roomId,
-        //     connectOnlyWithAudio
-        //   );
-        // }
-      }, []);
+    
+
+    // useEffect(() => {
+    //         webRTCHandler.getLocalPreviewAndInitRoomConnection(
+    //         isRoomHost,
+    //         identity,
+    //         roomId,
+    //         connectOnlyWithAudio);
+    //     // if (!isRoomHost && !roomId) {
+    //     //   const siteUrl = window.location.origin +'/room';
+    //     //   window.location.href = siteUrl;
+    //     // } else {
+    //     //   webRTCHandler.getLocalPreviewAndInitRoomConnection(
+    //     //     isRoomHost,
+    //     //     identity,
+    //     //     roomId,
+    //     //     connectOnlyWithAudio
+    //     //   );
+    //     // }
+    //   }, []);
 
     //=======Video Camera Button======
     const handleCameraButtonPressed = (e) => {
@@ -64,7 +69,7 @@ const Video = ({ roomId, identity, isRoomHost, connectOnlyWithAudio}) => {
                     <li className='text-sm lg:text-md px-1 lg:px-2'>REQ : 00.02.36s </li>
                 </div>
                 <div className="id">
-                    <p>Share Id{roomId}</p>
+                    {/* <p>Share Id{roomId}</p> */}
                 </div>
                 <div className='flex list-none items-center text-gray-200'>
                     <li className='bg-green-900 rounded-full cursor-pointer'><BsPlus /></li>
@@ -81,7 +86,7 @@ const Video = ({ roomId, identity, isRoomHost, connectOnlyWithAudio}) => {
                 
                 <div className="flex justify-center items-baseline">
                     <img src={user} alt="Main user" className='p-4' />
-                    <p>{roomId}</p>
+                    {/* <p>{roomId}</p> */}
                 </div>
 
                 <div className='grid grid-rows justify-center items-baseline pb-4'>
@@ -110,10 +115,10 @@ const Video = ({ roomId, identity, isRoomHost, connectOnlyWithAudio}) => {
     );
 };
 
-const mapStoreStateToProps = (state) => {
-    return {
-      ...state,
-    };
-};
+// const mapStoreStateToProps = (state) => {
+//     return {
+//       ...state,
+//     };
+// };
 
-export default connect(mapStoreStateToProps)(Video);
+export default Video;

@@ -70,11 +70,11 @@ const JoinMeetingModel = ({ isRoomHost, setIdentityAction, setRoomIdAction }) =>
                     <h2 className="text-center text-2xl divide-y">{titleText}</h2>
 
                     <input type="text" placeholder="Meeting ID" class="input w-full my-3 bg-slate-800 rounded" 
-                    value={roomIdValue}
+                    defaultValue={roomIdValue}
                     changeHandler={handleRoomIdValueChange}
                     />
                     <input type="text" placeholder="Enter your Name" class="input bg-slate-800 rounded w-full" 
-                    value={nameValue}
+                    defaultValue={nameValue}
                     changeHandler={handleNameValueChange}
                     />
                     
