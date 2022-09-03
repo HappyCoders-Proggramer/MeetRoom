@@ -42,7 +42,7 @@ const GroupRoom = () => {
     useEffect(() => {
         socketRef.current = io.connect("/");
         
-        // asking for audio and video access
+         // ==========Asking for audio and video access============
         navigator.mediaDevices.getUserMedia({ audio: true, video: videoConstraints }).then(stream => {
 
             // streaming the audio and video

@@ -12,7 +12,7 @@ const bodyParser = require('body-parser');
 const webrtc = require('wrtc');
 let senderStream;
 
-/* ------ CREATING AND JOINING ROOMS FOR CONNECTION BETWEEN USERS ------ */
+/* =========== CREATING AND JOINING ROOMS FOR CONNECTION BETWEEN USERS =========*/
 // room object to store the created room IDs
 const rooms = {};
 const users = {};
@@ -21,7 +21,7 @@ const socketToRoom = {};
 // when the user is forming a connection with socket.io
 io.on("connection", socket => {
 
-    // ===========handling one on one video call=============
+    // ===========Handling one on one video call=============
     socket.on("join room", roomID => {
 
         // if the room is already created, that means a person has already joined the room
@@ -58,14 +58,14 @@ io.on("connection", socket => {
         io.to(incoming.target).emit("ice-candidate", incoming.candidate);
     });
 
-    // ============handling Group Video Call===============
+    // ============Handling Group Video Call===============
     socket.on("join room group", roomID => {
         // getting the room with the room ID and adding the user to the room
         if (users[roomID]) {
             const length = users[roomID].length;
 
-            // if 6 people have joined already, alert that room is full
-            if (length === 6) {
+            // if 500 people have joined already, alert that room is full
+            if (length === 500) {
                 socket.emit("room full");
                 return;
             }
@@ -119,7 +119,37 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.post("/consumer", async ({ body }, res) => {
     const peer = new webrtc.RTCPeerConnection({
         iceServers: [
-            { urls: 'stun:stun.l.google.com:19302' }
+            { urls: 'stun:stun.l.google.com:19302' },
+                   { urls: 'stun:stun1.l.google.com:19302' },
+                   { urls: 'stun:stun2.l.google.com:19302' },
+                   { urls: 'stun:stun3.l.google.com:19302' },
+                   { urls: 'stun:stun4.l.google.com:19302' },
+                   { urls: "stun:openrelay.metered.ca:80" },
+                   {
+                       urls: 'turn:numb.viagenie.ca',
+                       credential: 'muazkh',
+                       username: 'webrtc@live.com'
+                   },
+                   {
+                    url: 'turn:turn.anyfirewall.com:443?transport=tcp',
+                    credential: 'webrtc',
+                    username: 'webrtc'
+                    },
+                    {
+                    urls: "turn:openrelay.metered.ca:80",
+                    username: "openrelayproject",
+                    credential: "openrelayproject",
+                    },
+                    {
+                    urls: "turn:openrelay.metered.ca:443",
+                    username: "openrelayproject",
+                    credential: "openrelayproject",
+                    },
+                    {
+                    urls: "turn:openrelay.metered.ca:443?transport=tcp",
+                    username: "openrelayproject",
+                    credential: "openrelayproject",
+                  },
         ]
     });
     const desc = new webrtc.RTCSessionDescription(body.sdp);
@@ -134,13 +164,43 @@ app.post("/consumer", async ({ body }, res) => {
     res.json(payload);
 });
 
-// implementing broadcast
+// ========Live Broadcast=========
 app.post('/broadcast', async ({ body }, res) => {
 
     // creating a peer connection only once
     const peer = new webrtc.RTCPeerConnection({
         iceServers: [
-            { urls: 'stun:stun.l.google.com:19302' }
+            { urls: 'stun:stun.l.google.com:19302' },
+                   { urls: 'stun:stun1.l.google.com:19302' },
+                   { urls: 'stun:stun2.l.google.com:19302' },
+                   { urls: 'stun:stun3.l.google.com:19302' },
+                   { urls: 'stun:stun4.l.google.com:19302' },
+                   { urls: "stun:openrelay.metered.ca:80" },
+                   {
+                       urls: 'turn:numb.viagenie.ca',
+                       credential: 'muazkh',
+                       username: 'webrtc@live.com'
+                   },
+                   {
+                    url: 'turn:turn.anyfirewall.com:443?transport=tcp',
+                    credential: 'webrtc',
+                    username: 'webrtc'
+                    },
+                    {
+                    urls: "turn:openrelay.metered.ca:80",
+                    username: "openrelayproject",
+                    credential: "openrelayproject",
+                    },
+                    {
+                    urls: "turn:openrelay.metered.ca:443",
+                    username: "openrelayproject",
+                    credential: "openrelayproject",
+                    },
+                    {
+                    urls: "turn:openrelay.metered.ca:443?transport=tcp",
+                    username: "openrelayproject",
+                    credential: "openrelayproject",
+                  },
         ]
     });
 
@@ -160,14 +220,6 @@ app.post('/broadcast', async ({ body }, res) => {
 function handleTrackEvent(e, peer) {
     senderStream = e.streams[0];
 }
-
-// if (process.env.PROD) {
-//     app.use(express.static(path.join(__dirname, './client/build')));
-//     app.get('*', (req, res) => {
-//         res.sendFile(path.join(__dirname, './client/build/index.html'));
-//     });
-// }
-
 
 if (process.env.NODE_ENV == 'production') {
     app.use(express.static('client/build'));

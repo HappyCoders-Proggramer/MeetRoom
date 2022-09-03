@@ -28,20 +28,7 @@ const SingleVideo = ({userVideo, partnerVideo, getUrl, copySuccess, toggleAudio,
                     <div className="grid grid-cols-1 gap-2 justify-center rounded-xl p-2 relative">
                         <video id="user" className="oneVideo absolute left-0 top-0" muted autoPlay playsInline ref = {userVideo} />
                         <video id="peer" className="oneVideo relative" autoPlay playsInline ref = {partnerVideo} />
-                    </div>
-                {/* {
-                    userVideo ? 
-                    <div className="grid grid-cols-1 gap-2 justify-center rounded-xl p-2 relative">
-                        <video id="user" className="oneVideo absolute left-0 top-0" muted autoPlay playsInline ref = {userVideo} />
-                        <video id="peer" className="oneVideo relative" autoPlay playsInline ref = {partnerVideo} />
-                    </div>
-                    :
-                    <div className="grid grid-cols-1 gap-2 justify-center rounded-xl p-2 relative">
-                        <video id="user" className="oneVideo relative" muted autoPlay playsInline ref = {userVideo} />
-                        <video id="peer" className="oneVideo absolute left-0 top-0" autoPlay playsInline ref = {partnerVideo} />
-                    </div>
-                } */}
-               
+                    </div>               
                 
 
                  {/* =======Video Controller======= */}

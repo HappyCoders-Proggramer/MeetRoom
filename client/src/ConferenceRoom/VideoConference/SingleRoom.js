@@ -25,7 +25,7 @@ const SingleRoom = (props) => {
        let localStream;
 
        useEffect(() => {
-           // asking for audio and video access
+           // ==========Asking for audio and video access============
            navigator.mediaDevices.getUserMedia({ audio: true, video: true }).then(stream => {
                
                // streaming the audio and video and storing the local stream
@@ -130,7 +130,7 @@ const SingleRoom = (props) => {
            return peer;
        }
    
-       // ------ CREATING THE PEER TO PEER CONNECTION --------
+       // ================== CREATING THE PEER TO PEER CONNECTION ==========
    
        // making the call
        // when the actual offer is created, it is then sent to the other user
@@ -193,7 +193,7 @@ const SingleRoom = (props) => {
            peerRef.current.setRemoteDescription(desc).catch(e => console.log(e));
        }
    
-       // ------ END OF THE PEER TO PEER CONNECTION --------
+       // ======== END OF THE PEER TO PEER CONNECTION ===============
    
    
        // handling the ice candidates
